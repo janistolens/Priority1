@@ -49,7 +49,7 @@ dotnet ef migrations add < MigrationName > --project ../Priority1.ToDo.Core --st
 dotnet ef database update
 ```
 
-This creates the `Priority1ToDo` database and the `Todos` table.
+This creates the `Priority1ToDo` database and the `TodoLists` and `Todos` tables. Existing todos are attached to a default list named `My list`.
 
 ### 3. Run the API
 
@@ -87,33 +87,40 @@ Priority1.ToDo/
 ├── server/
 │   ├── Priority1.ToDo.sln
 │   ├── Priority1.ToDo.Api/       # ASP.NET Core Web API (startup application)
-│   │   ├── Controllers/          # TodosController — thin, calls into services
+│   │   ├── Controllers/          # TodosController, TodoListsController — thin, call into services
 │   │   ├── Models/               # Request/response DTOs
 │   │   ├── Program.cs            # DI, EF, CORS, Swagger wiring
 │   │   └── appsettings*.json     # Connection string (Development matches Docker)
 │   └── Priority1.ToDo.Core/      # Class library (referenced by the Api)
-│       ├── Domain/               # EF entities (Todo)
+│       ├── Domain/               # EF entities (Todo, TodoList)
 │       ├── Data/                 # AppDbContext
 │       ├── Migrations/           # EF Code First migrations
-│       └── Services/             # Business logic (ITodoService / TodoService)
+│       └── Services/             # Business logic (todo and list services)
 └── client/                       # Vite + React app
     └── src/
         ├── api.js                # API base URL + fetch helpers
-        ├── App.jsx               # Loads todos, owns state, wires handlers
-        └── components/           # AddTodoForm, TodoList, TodoItem
+        ├── App.jsx               # Loads lists and the selected list's todos
+        └── components/           # AddTodoForm, ListPanel, TodoList, TodoItem
 ```
 
 ### API endpoints
 
 | Method | Route | Description |
 | --- | --- | --- |
-| GET | `/todos` | List all todos |
+| GET | `/lists` | List all todo lists |
+| GET | `/lists/{id}` | Get one todo list |
+| POST | `/lists` | Create a todo list |
+| PUT | `/lists/{id}` | Rename a todo list |
+| DELETE | `/lists/{id}` | Delete a todo list and its items |
+| GET | `/todos?listId={id}` | List todos that belong to a list |
 | GET | `/todos/{id}` | Get one todo |
-| POST | `/todos` | Create a todo |
+| POST | `/todos` | Create a todo in a list (`listId` required) |
 | PUT | `/todos/{id}` | Update a todo |
 | DELETE | `/todos/{id}` | Delete a todo |
 
-The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
+The `TodoList` entity: `Id`, `Title` (required), `CreateDate`, `UpdateDate`. Deleting a list deletes its todos.
+
+The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `TodoListId` (required), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
 
 ### Notes / intentional simplifications
 
