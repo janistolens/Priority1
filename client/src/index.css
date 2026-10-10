@@ -206,6 +206,10 @@ ul.todo-list {
   font-size: 0.9rem;
 }
 
+.todo-item input.due-date.complete {
+  color: #6e7781;
+}
+
 .todo-item.past-due {
   border-color: #cf222e;
 }

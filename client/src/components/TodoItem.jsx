@@ -22,7 +22,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete
     setEditing(false);
   }
 
-  const pastDue = Boolean(todo.dueDate) && isPastDue(todo.dueDate);
+  const pastDue = Boolean(todo.dueDate) && !todo.isComplete && isPastDue(todo.dueDate);
 
   return (
     <li className={`todo-item ${pastDue ? 'past-due' : ''}`}>
@@ -60,7 +60,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete
 
       <input
         type="datetime-local"
-        className="due-date"
+        className={`due-date ${todo.isComplete ? 'complete' : ''}`}
         aria-label="Due date"
         value={dueDateInputValue(todo.dueDate)}
         onChange={(e) => onDueDate(todo, e.target.value || null)}
