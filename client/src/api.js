@@ -41,19 +41,19 @@ export function getTodos(listId) {
   return fetch(`${TODOS_URL}?listId=${listId}`).then(handle);
 }
 
-export function createTodo({ title, listId, isComplete = false }) {
+export function createTodo({ title, listId, dueDate = null, isComplete = false }) {
   return fetch(TODOS_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, listId, isComplete }),
+    body: JSON.stringify({ title, listId, dueDate, isComplete }),
   }).then(handle);
 }
 
-export function updateTodo(id, { title, isComplete }) {
+export function updateTodo(id, { title, isComplete, dueDate = null }) {
   return fetch(`${TODOS_URL}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, isComplete }),
+    body: JSON.stringify({ title, isComplete, dueDate }),
   }).then(handle);
 }
 

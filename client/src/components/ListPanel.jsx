@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PencilIcon, TrashIcon } from './Icons';
 
 function ListRow({ list, selected, onSelect, onRename, onDelete }) {
   const [editing, setEditing] = useState(false);
@@ -44,19 +45,28 @@ function ListRow({ list, selected, onSelect, onRename, onDelete }) {
       )}
 
       {!editing && (
-        <button type="button" onClick={() => setEditing(true)}>
-          Edit
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={`Edit ${list.title}`}
+          title="Edit"
+          onClick={() => setEditing(true)}
+        >
+          <PencilIcon />
         </button>
       )}
       <button
         type="button"
+        className="icon-button danger"
+        aria-label={`Delete ${list.title}`}
+        title="Delete"
         onClick={() => {
           if (window.confirm(`Delete "${list.title}" and all of its todos?`)) {
             onDelete(list);
           }
         }}
       >
-        Delete
+        <TrashIcon />
       </button>
     </li>
   );

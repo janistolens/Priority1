@@ -22,11 +22,44 @@ body {
 
 .list-panel {
   flex: 0 0 240px;
+  width: 240px;
+  max-width: 240px;
+  overflow: hidden;
 }
 
 .items-panel {
   flex: 1;
   min-width: 0;
+}
+
+.items-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.items-heading h2 {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.sort-control select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
 }
 
 h2 {
@@ -47,6 +80,7 @@ h2 {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  min-width: 0;
   padding: 0.4rem 0.5rem;
   background: #fff;
   border: 1px solid #d0d7de;
@@ -59,12 +93,41 @@ h2 {
 }
 
 .list-row .list-name {
-  flex: 1;
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: left;
   background: transparent;
   border: none;
   padding: 0.25rem 0.2rem;
   font-size: 0.95rem;
+}
+
+button.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 0.3rem;
+  line-height: 0;
+  color: #6e7781;
+}
+
+button.icon-button.danger {
+  color: #cf222e;
+}
+
+button.icon-button:hover {
+  background: #f3f4f6;
+  color: #1f2328;
+}
+
+button.icon-button.danger:hover {
+  background: #ffebe9;
+  color: #cf222e;
 }
 
 .list-row .list-name:hover {
@@ -80,6 +143,19 @@ h2 {
   font-size: 0.95rem;
 }
 
+.list-panel .add-form {
+  min-width: 0;
+}
+
+.list-panel .add-form input {
+  width: 0;
+  min-width: 0;
+}
+
+.list-panel .add-form button {
+  flex-shrink: 0;
+}
+
 @media (max-width: 720px) {
   .workspace {
     flex-direction: column;
@@ -88,6 +164,7 @@ h2 {
   .list-panel {
     flex-basis: auto;
     width: 100%;
+    max-width: none;
   }
 }
 
@@ -108,6 +185,10 @@ h1 {
   border: 1px solid #d0d7de;
   border-radius: 6px;
   font-size: 1rem;
+}
+
+.add-form input[type='datetime-local'] {
+  flex: 0 0 auto;
 }
 
 button {
@@ -142,9 +223,20 @@ ul.todo-list {
   gap: 0.5rem;
 }
 
+.complete-list {
+  margin-top: 1.5rem;
+}
+
+.complete-list h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6e7781;
+}
+
 .todo-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.6rem;
   padding: 0.6rem 0.75rem;
   background: #fff;
@@ -152,8 +244,20 @@ ul.todo-list {
   border-radius: 8px;
 }
 
+.todo-item > input,
+.todo-item > button,
+.todo-item > .due-date,
+.todo-item > .due-complete,
+.todo-item > .due-remaining,
+.todo-item > .past-due-flag {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
 .todo-item .title {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .todo-item .title.complete {
@@ -167,6 +271,37 @@ ul.todo-list {
   border: 1px solid #d0d7de;
   border-radius: 6px;
   font-size: 1rem;
+}
+
+.todo-item input.due-date {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.due-complete {
+  color: #6e7781;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.todo-item.past-due {
+  border-color: #cf222e;
+}
+
+.past-due-flag {
+  color: #cf222e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.due-remaining {
+  color: #1f2328;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .muted {
