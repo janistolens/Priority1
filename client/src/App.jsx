@@ -60,6 +60,7 @@ export default function App() {
   const sortedTodos = [...todos].sort((a, b) => compareTodos(a, b, sortBy));
 
   function selectList(id) {
+    if (id === selectedListId) return;
     setSelectedListId(id);
     setTodos([]);
     setLoadingTodos(id != null);
