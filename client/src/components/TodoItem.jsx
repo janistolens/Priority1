@@ -4,6 +4,13 @@ function dueDateInputValue(dueDate) {
   return dueDate ? dueDate.slice(0, 16) : '';
 }
 
+function completeDueDate(dueDate) {
+  return new Date(dueDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+  });
+}
+
 function isPastDue(dueDate) {
   return new Date(dueDate) < new Date();
 }
@@ -45,7 +52,7 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete
 
   const overdue = Boolean(todo.dueDate) && isPastDue(todo.dueDate);
   const pastDue = overdue && !todo.isComplete;
-  const remaining = todo.dueDate && !overdue ? dueRemaining(todo.dueDate) : null;
+  const remaining = todo.dueDate && !overdue && !todo.isComplete ? dueRemaining(todo.dueDate) : null;
 
   return (
     <li className={`todo-item ${pastDue ? 'past-due' : ''}`}>
@@ -81,16 +88,20 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete
         </span>
       )}
 
-      <input
-        type="datetime-local"
-        className={`due-date ${todo.isComplete ? 'complete' : ''}`}
-        aria-label="Due date"
-        value={dueDateInputValue(todo.dueDate)}
-        onChange={(e) => onDueDate(todo, e.target.value || null)}
-      />
+      {todo.isComplete ? (
+        todo.dueDate && <span className="due-complete">{completeDueDate(todo.dueDate)}</span>
+      ) : (
+        <input
+          type="datetime-local"
+          className="due-date"
+          aria-label="Due date"
+          value={dueDateInputValue(todo.dueDate)}
+          onChange={(e) => onDueDate(todo, e.target.value || null)}
+        />
+      )}
       {pastDue && <span className="past-due-flag">Past due</span>}
       {remaining && (
-        <span className={`due-remaining ${todo.isComplete ? 'complete' : ''}`}>{remaining}</span>
+        <span className="due-remaining">{remaining}</span>
       )}
 
       {!editing && (

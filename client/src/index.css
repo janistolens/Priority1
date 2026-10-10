@@ -172,6 +172,17 @@ ul.todo-list {
   gap: 0.5rem;
 }
 
+.complete-list {
+  margin-top: 1.5rem;
+}
+
+.complete-list h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6e7781;
+}
+
 .todo-item {
   display: flex;
   align-items: center;
@@ -206,8 +217,10 @@ ul.todo-list {
   font-size: 0.9rem;
 }
 
-.todo-item input.due-date.complete {
+.due-complete {
   color: #6e7781;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .todo-item.past-due {
@@ -226,11 +239,6 @@ ul.todo-list {
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
-}
-
-.due-remaining.complete {
-  color: #6e7781;
-  font-weight: 500;
 }
 
 .muted {
