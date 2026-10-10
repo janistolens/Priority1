@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PencilIcon, TrashIcon } from './Icons';
 
 function dueDateInputValue(dueDate) {
   return dueDate ? dueDate.slice(0, 16) : '';
@@ -105,9 +106,25 @@ export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete
       )}
 
       {!editing && (
-        <button onClick={() => setEditing(true)}>Edit</button>
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={`Edit ${todo.title}`}
+          title="Edit"
+          onClick={() => setEditing(true)}
+        >
+          <PencilIcon />
+        </button>
       )}
-      <button onClick={() => onDelete(todo)}>Delete</button>
+      <button
+        type="button"
+        className="icon-button danger"
+        aria-label={`Delete ${todo.title}`}
+        title="Delete"
+        onClick={() => onDelete(todo)}
+      >
+        <TrashIcon />
+      </button>
     </li>
   );
 }

@@ -86,11 +86,39 @@ h2 {
 
 .list-row .list-name {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: left;
   background: transparent;
   border: none;
   padding: 0.25rem 0.2rem;
   font-size: 0.95rem;
+}
+
+button.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 0.3rem;
+  line-height: 0;
+  color: #6e7781;
+}
+
+button.icon-button.danger {
+  color: #cf222e;
+}
+
+button.icon-button:hover {
+  background: #f3f4f6;
+  color: #1f2328;
+}
+
+button.icon-button.danger:hover {
+  background: #ffebe9;
+  color: #cf222e;
 }
 
 .list-row .list-name:hover {
