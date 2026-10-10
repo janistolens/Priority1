@@ -221,6 +221,18 @@ ul.todo-list {
   white-space: nowrap;
 }
 
+.due-remaining {
+  color: #1f2328;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.due-remaining.complete {
+  color: #6e7781;
+  font-weight: 500;
+}
+
 .muted {
   color: #6e7781;
 }
