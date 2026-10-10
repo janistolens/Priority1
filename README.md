@@ -120,7 +120,7 @@ Priority1.ToDo/
 
 The `TodoList` entity: `Id`, `Title` (required), `CreateDate`, `UpdateDate`. Deleting a list deletes its todos.
 
-The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `TodoListId` (required), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update).
+The `Todo` entity: `Id`, `Title` (required), `IsComplete` (default `false`), `DueDate` (optional), `TodoListId` (required), `CreateDate` (set on insert), `UpdateDate` (set on insert and every update). Items in a list can be sorted by due date or create date. A todo whose due date and time is before now is marked past due.
 
 ### Notes / intentional simplifications
 

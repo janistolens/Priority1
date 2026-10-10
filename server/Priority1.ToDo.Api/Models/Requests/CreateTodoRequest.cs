@@ -17,6 +17,8 @@ public class CreateTodoRequest
 
     public bool IsComplete { get; set; }
 
+    public DateTime? DueDate { get; set; }
+
     [Range(1, int.MaxValue)]
     public int ListId { get; set; }
 
@@ -26,6 +28,7 @@ public class CreateTodoRequest
         {
             Title = Title,
             IsComplete = IsComplete,
+            DueDate = DueDate,
             TodoListId = ListId
         };
     }

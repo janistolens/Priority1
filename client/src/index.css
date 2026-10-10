@@ -29,6 +29,32 @@ body {
   min-width: 0;
 }
 
+.items-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.items-heading h2 {
+  margin: 0;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.sort-control select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
 h2 {
   font-size: 1.1rem;
   margin: 0 0 0.75rem;
@@ -110,6 +136,10 @@ h1 {
   font-size: 1rem;
 }
 
+.add-form input[type='datetime-local'] {
+  flex: 0 0 auto;
+}
+
 button {
   padding: 0.5rem 0.8rem;
   border: 1px solid #d0d7de;
@@ -167,6 +197,24 @@ ul.todo-list {
   border: 1px solid #d0d7de;
   border-radius: 6px;
   font-size: 1rem;
+}
+
+.todo-item input.due-date {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.todo-item.past-due {
+  border-color: #cf222e;
+}
+
+.past-due-flag {
+  color: #cf222e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .muted {

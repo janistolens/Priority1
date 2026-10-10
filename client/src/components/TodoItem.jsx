@@ -1,6 +1,14 @@
 import { useState } from 'react';
 
-export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
+function dueDateInputValue(dueDate) {
+  return dueDate ? dueDate.slice(0, 16) : '';
+}
+
+function isPastDue(dueDate) {
+  return new Date(dueDate) < new Date();
+}
+
+export default function TodoItem({ todo, onToggle, onRename, onDueDate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
 
@@ -14,8 +22,10 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
     setEditing(false);
   }
 
+  const pastDue = Boolean(todo.dueDate) && isPastDue(todo.dueDate);
+
   return (
-    <li className="todo-item">
+    <li className={`todo-item ${pastDue ? 'past-due' : ''}`}>
       <input
         type="checkbox"
         checked={todo.isComplete}
@@ -47,6 +57,15 @@ export default function TodoItem({ todo, onToggle, onRename, onDelete }) {
           {todo.title}
         </span>
       )}
+
+      <input
+        type="datetime-local"
+        className="due-date"
+        aria-label="Due date"
+        value={dueDateInputValue(todo.dueDate)}
+        onChange={(e) => onDueDate(todo, e.target.value || null)}
+      />
+      {pastDue && <span className="past-due-flag">Past due</span>}
 
       {!editing && (
         <button onClick={() => setEditing(true)}>Edit</button>

@@ -19,6 +19,7 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [loadingLists, setLoadingLists] = useState(true);
   const [loadingTodos, setLoadingTodos] = useState(false);
+  const [sortBy, setSortBy] = useState('createDate');
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function App() {
   }, [selectedListId]);
 
   const selectedList = lists.find((list) => list.id === selectedListId) ?? null;
+  const sortedTodos = [...todos].sort((a, b) => compareTodos(a, b, sortBy));
 
   function selectList(id) {
     setSelectedListId(id);
@@ -95,10 +97,10 @@ export default function App() {
     }
   }
 
-  async function handleAdd(title) {
+  async function handleAdd(title, dueDate) {
     if (selectedListId == null) return;
     try {
-      const created = await createTodo({ title, listId: selectedListId });
+      const created = await createTodo({ title, listId: selectedListId, dueDate });
       setTodos((prev) => [...prev, created]);
     } catch (e) {
       setError(e.message);
@@ -110,6 +112,7 @@ export default function App() {
       const updated = await updateTodo(todo.id, {
         title: todo.title,
         isComplete: !todo.isComplete,
+        dueDate: todo.dueDate,
       });
       setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
     } catch (e) {
@@ -122,6 +125,20 @@ export default function App() {
       const updated = await updateTodo(todo.id, {
         title,
         isComplete: todo.isComplete,
+        dueDate: todo.dueDate,
+      });
+      setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  async function handleDueDate(todo, dueDate) {
+    try {
+      const updated = await updateTodo(todo.id, {
+        title: todo.title,
+        isComplete: todo.isComplete,
+        dueDate,
       });
       setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
     } catch (e) {
@@ -160,15 +177,25 @@ export default function App() {
           <section className="items-panel">
             {selectedList ? (
               <>
-                <h2>{selectedList.title}</h2>
+                <div className="items-heading">
+                  <h2>{selectedList.title}</h2>
+                  <label className="sort-control">
+                    Sort
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                      <option value="createDate">Create date</option>
+                      <option value="dueDate">Due date</option>
+                    </select>
+                  </label>
+                </div>
                 <AddTodoForm onAdd={handleAdd} />
                 {loadingTodos ? (
                   <p className="muted">Loading…</p>
                 ) : (
                   <TodoList
-                    todos={todos}
+                    todos={sortedTodos}
                     onToggle={handleToggle}
                     onRename={handleRename}
+                    onDueDate={handleDueDate}
                     onDelete={handleDelete}
                   />
                 )}
@@ -181,4 +208,17 @@ export default function App() {
       )}
     </div>
   );
+}
+
+function compareTodos(a, b, sortBy) {
+  if (sortBy === 'dueDate') {
+    if (a.dueDate && b.dueDate && a.dueDate !== b.dueDate) {
+      return a.dueDate < b.dueDate ? -1 : 1;
+    }
+    if (a.dueDate && !b.dueDate) return -1;
+    if (!a.dueDate && b.dueDate) return 1;
+  }
+
+  if (a.createDate === b.createDate) return 0;
+  return a.createDate < b.createDate ? -1 : 1;
 }

@@ -33,6 +33,9 @@ namespace Priority1.ToDo.Core.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsComplete")
                         .HasColumnType("bit");
 
