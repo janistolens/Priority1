@@ -2,6 +2,7 @@
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
+const TODO_LISTS_URL = `${API_BASE_URL}/lists`;
 const TODOS_URL = `${API_BASE_URL}/todos`;
 
 async function handle(res) {
@@ -12,15 +13,39 @@ async function handle(res) {
   return res.status === 204 ? null : res.json();
 }
 
-export function getTodos() {
-  return fetch(TODOS_URL).then(handle);
+export function getTodoLists() {
+  return fetch(TODO_LISTS_URL).then(handle);
 }
 
-export function createTodo({ title, isComplete = false }) {
+export function createTodoList({ title }) {
+  return fetch(TODO_LISTS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  }).then(handle);
+}
+
+export function updateTodoList(id, { title }) {
+  return fetch(`${TODO_LISTS_URL}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  }).then(handle);
+}
+
+export function deleteTodoList(id) {
+  return fetch(`${TODO_LISTS_URL}/${id}`, { method: 'DELETE' }).then(handle);
+}
+
+export function getTodos(listId) {
+  return fetch(`${TODOS_URL}?listId=${listId}`).then(handle);
+}
+
+export function createTodo({ title, listId, isComplete = false }) {
   return fetch(TODOS_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, isComplete }),
+    body: JSON.stringify({ title, listId, isComplete }),
   }).then(handle);
 }
 

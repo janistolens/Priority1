@@ -5,17 +5,28 @@ namespace Priority1.ToDo.Api.Models.Requests;
 
 public class CreateTodoRequest
 {
+    private string _title = string.Empty;
+
     [Required]
-    public string Title { get; set; }
+    [MaxLength(200)]
+    public string Title
+    {
+        get => _title;
+        set => _title = value?.Trim() ?? string.Empty;
+    }
 
     public bool IsComplete { get; set; }
+
+    [Range(1, int.MaxValue)]
+    public int ListId { get; set; }
 
     public Todo ToModel()
     {
         return new Todo
         {
             Title = Title,
-            IsComplete = IsComplete
+            IsComplete = IsComplete,
+            TodoListId = ListId
         };
     }
 }

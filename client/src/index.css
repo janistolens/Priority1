@@ -10,8 +10,85 @@ body {
 }
 
 .app {
-  max-width: 640px;
+  max-width: 960px;
   margin: 0 auto;
+}
+
+.workspace {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.list-panel {
+  flex: 0 0 240px;
+}
+
+.items-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.list-rows {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+}
+
+.list-row.selected {
+  border-color: #1f883d;
+  background: #f0fff4;
+}
+
+.list-row .list-name {
+  flex: 1;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.25rem 0.2rem;
+  font-size: 0.95rem;
+}
+
+.list-row .list-name:hover {
+  background: transparent;
+}
+
+.list-row input.edit-title {
+  flex: 1;
+  min-width: 0;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 720px) {
+  .workspace {
+    flex-direction: column;
+  }
+
+  .list-panel {
+    flex-basis: auto;
+    width: 100%;
+  }
 }
 
 h1 {

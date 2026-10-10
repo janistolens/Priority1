@@ -4,7 +4,7 @@ namespace Priority1.ToDo.Core.Services.Interfaces;
 
 public interface ITodoService
 {
-    Task<List<Todo>> GetAllAsync(CancellationToken ct = default);
+    Task<List<Todo>> GetByListIdAsync(int listId, CancellationToken ct = default);
 
     Task<Todo?> GetByIdAsync(int id, CancellationToken ct = default);
 
